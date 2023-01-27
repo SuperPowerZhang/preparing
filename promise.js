@@ -1,6 +1,6 @@
 const PENDING = 'pending';
 const FULFILLED = 'fulfilled';
-const FAILED = 'failed';
+const REJECTED = 'rejected';
 
 class Promise {
   #status = PENDING;
@@ -30,7 +30,7 @@ class Promise {
     }
     let reject = (reason) => {
       if (this.#status === PENDING) {
-        this.#status = FAILED;
+        this.#status = REJECTED;
       }
       this.#reason = reason;
       if (this.queue.length) {
