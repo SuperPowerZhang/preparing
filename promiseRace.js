@@ -1,16 +1,10 @@
 Promise.all = function (promiseArr) {
   const len = promiseArr.length;
-  let count = 0;
-  const res = new Array(len).fill(null);
   return new Promise((resolve, reject) => {
-    promiseArr.forEach((pro, index) => {
+    promiseArr.forEach(pro => {
       // 非promise类型调用then会报错
       Promise.resolve(pro).then(data => {
-        res[index] = data;
-        count += 1;
-        if (count === len) {
-          resolve(res);
-        }
+        resolve(data);
       }, err => {
         reject(err);
       })
@@ -24,8 +18,8 @@ var p3 = new Promise((resolve, reject) => {
   setTimeout(resolve, 100, 'foo');
 });
 
-Promise.all([p1, p2, p3]).then(values => {
-  console.log(values); // [3, 1337, "foo"]
+Promise.race([p2, p1, p3]).then(values => {
+  console.log(values);
 });
 
 // TODO race 、allSettled、race
