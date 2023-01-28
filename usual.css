@@ -84,3 +84,26 @@
 /* 1  left float right margin-left */
 
 /* 2 right flex 1 */
+
+/* 超出省略 */
+
+p {
+  width: 300px;
+  overflow: hidden;
+  /*文本不会换行*/
+  white-space: nowrap;
+  /*当文本溢出包含元素时，以省略号表示超出的文本*/
+  text-overflow: ellipsis;
+}
+
+/* 多行省略 只兼容移动端 / webkit内核的浏览器 ，兼容所有可以用after伪元素为...,absolute*/
+
+p {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  width: 300px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
