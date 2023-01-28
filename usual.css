@@ -1,0 +1,86 @@
+/* 清除浮动 */
+.clearfix {
+  content: '';
+  display: block;
+  /* 或者 table */
+  clear: both;
+}
+
+.clearfix {
+  zoom: 1;
+}
+
+/* 垂直居中 */
+/* 1 伪装table 直接是table就更好用了 */
+.parent {
+  display: table
+}
+
+.child {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+/* 2  前后的div都撑开 跟child一起都要vertical-align: middle*/
+.before {
+  height: 100%;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.child {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.after {
+  height: 100%;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+/* 3、 -50% 再计算差值 */
+.parent {
+  position: relative;
+}
+
+.child {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  top: -5px;
+  left: -10px;
+}
+
+/* 3、 -50% 再translate */
+.parent {
+  position: relative;
+}
+
+.child {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* 4、absolute 0 margin auto */
+.parent {
+  position: relative;
+}
+
+.child {
+  position: absolute;
+  margin: auto;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+/* 5 flex */
+
+/* 一列定宽 一列自动撑开 */
+/* 1  left float right margin-left */
+
+/* 2 right flex 1 */
