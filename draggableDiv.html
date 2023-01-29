@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>可拖曳Div</title>
+  <style>
+    .div {
+      width: 100px;
+      height: 100px;
+      /* position: absolute;
+      top: 0;
+      left: 0; */
+      transform: translate(0, 0);
+      border: 1px solid green;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="div"></div>
+  <script>
+    const div = document.querySelector(".div");
+    let draggable = false;
+    let position = [];
+    div.addEventListener('mousedown', (e) => {
+      draggable = true;
+      position = [e.clientX, e.clientY];
+
+    })
+    function getTranslateVal(matrix) {
+      const matrixType = matrix.includes('3d') ? '3d' : '2d'
+      const matrixValues = matrix.match(/matrix.*\((.+)\)/)[1].split(', ')
+      if (matrixType === '2d') {
+        const x = matrixValues[4]
+        const y = matrixValues[5]
+        return [parseInt(x), parseInt(y)]
+      } else if (matrixType === '3d') {
+        const x = matrixValues[12]
+        const y = matrixValues[13]
+        const z = matrixValues[14]
+        return [parseInt(x), parseInt(y), parseInt(z)]
+      }
+    }
+    document.addEventListener('mouseover', (e) => {
+      if (!draggable) return;
+      const deltaX = e.clientX - position[0];
+      const deltaY = e.clientY - position[1];
+      // 方案1 修改top&left，会导致回流 
+      // const pre = [parseInt(div.style.left || 0), parseInt(div.style.top || 0)];
+      // div.style.left = pre[0] + deltaX + 'px';
+      // div.style.top = pre[1] + deltaY + 'px';
+
+      // 方案2 修改transform，只会重绘 
+      const tempStyle = window.getComputedStyle(div);
+      const tempMatrix = tempStyle.transform;
+      const preVal = getTranslateVal(tempMatrix);
+      // 直接在等式右边计算不行，必须提前算出来，有点离谱
+      // div.style.transform = `translate (${preVal[0] + deltaX + 'px'},${preVal[1] + deltaY + 'px'} );`
+      const xxx = `translate(${preVal[0] + deltaX + 'px'}, ${preVal[1] + deltaY + 'px'})`
+      div.style.transform = xxx;
+      position = [e.clientX, e.clientY];
+    })
+    document.addEventListener('mouseup', (e) => {
+      draggable = false;
+    })
+  </script>
+</body>
+
+</html>
