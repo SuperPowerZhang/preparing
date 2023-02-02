@@ -21,12 +21,22 @@
     "node": "16.18.1"
   },
   "devDependencies": {
+    "@commitlint/cli": "^17.4.2",
     "commitizen": "^4.3.0",
-    "cz-git": "^1.4.1"
+    "cz-git": "^1.4.1",
+    "eslint": "^8.33.0",
+    "husky": "^8.0.3",
+    "lint-staged": "^13.1.0"
   },
   "config": {
     "commitizen": {
       "path": "./node_modules/cz-git"
+    }
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
     }
   }
 }
