@@ -4,6 +4,7 @@
   "description": "为面试做一些积累",
   "main": "ajax.js",
   "scripts": {
+    "prepare": "husky install",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -35,7 +36,7 @@
   },
   "husky": {
     "hooks": {
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+      "commit-msg": "commitlint --config commitlint.config.js"
     }
   }
 }
