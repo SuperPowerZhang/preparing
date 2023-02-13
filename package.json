@@ -4,7 +4,6 @@
   "description": "为面试做一些积累",
   "main": "ajax.js",
   "scripts": {
-    "prepare": "husky install",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -17,21 +16,5 @@
   "bugs": {
     "url": "https://github.com/SuperPowerZhang/preparing/issues"
   },
-  "homepage": "https://github.com/SuperPowerZhang/preparing#readme",
-  "dependencies": {
-    "node": "16.18.1"
-  },
-  "devDependencies": {
-    "@commitlint/cli": "^17.4.2",
-    "commitizen": "^4.3.0",
-    "cz-git": "^1.4.1",
-    "eslint": "^8.33.0",
-    "husky": "^8.0.3",
-    "lint-staged": "^13.1.0"
-  },
-  "config": {
-    "commitizen": {
-      "path": "./node_modules/cz-git"
-    }
-  }
+  "homepage": "https://github.com/SuperPowerZhang/preparing#readme"
 }
