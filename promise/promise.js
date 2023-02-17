@@ -8,7 +8,7 @@ class Promise {
   #reason = undefined;
   queue = [];
   constructor(execuctor) {
-    let resolve = (data) => {
+    let resolve = data => {
       if (this.#status === PENDING) {
         this.#status = FULFILLED;
       }
@@ -18,17 +18,20 @@ class Promise {
         const res = p1p2[0].call(undefined, data);
         // 这里仅判断了Promise 和 非Promise 2 种类型，相当于非Promise.reject都视为成功了
         if (res instanceof Promise) {
-          res.then(data => {
-            resolve(data)
-          }, err => {
-            reject(err)
-          })
+          res.then(
+            data => {
+              resolve(data);
+            },
+            err => {
+              reject(err);
+            }
+          );
         } else {
           resolve(res);
         }
       }
-    }
-    let reject = (reason) => {
+    };
+    let reject = reason => {
       if (this.#status === PENDING) {
         this.#status = REJECTED;
       }
@@ -38,20 +41,23 @@ class Promise {
         const res = p1p2[1].call(undefined, reason);
         // 这里仅判断了Promise 和 非Promise 2 种类型，相当于非Promise.reject都视为成功了
         if (res instanceof Promise) {
-          res.then(data => {
-            resolve(data)
-          }, err => {
-            reject(err)
-          })
+          res.then(
+            data => {
+              resolve(data);
+            },
+            err => {
+              reject(err);
+            }
+          );
         } else {
           resolve(res);
         }
       }
-    }
+    };
     try {
       execuctor.call(undefined, resolve, reject);
     } catch (e) {
-      reject(e)
+      reject(e);
     }
   }
 
@@ -68,15 +74,20 @@ class Promise {
     //   }
     // })
   }
+  ctach() {}
+  finally() {}
 }
 
 const p1 = new Promise((resolve, reject) => {
   setTimeout(() => {
-    reject('ggggg')
-  }, 1000)
-})
-p1.then((data) => {
-  console.log(1111, 'chenggong', data);
-}, (err) => {
-  console.log(1111, 'shibai', err);
-})
+    reject('ggggg');
+  }, 1000);
+});
+p1.then(
+  data => {
+    console.log(1111, 'chenggong', data);
+  },
+  err => {
+    console.log(1111, 'shibai', err);
+  }
+);

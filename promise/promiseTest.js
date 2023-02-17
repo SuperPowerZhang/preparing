@@ -9,20 +9,18 @@ const promise = new Promise((resolve, reject) => {
   resolve('success2');
 });
 
-promise.then((res) => {
-  console.log('then:', res);
-}).catch((err) => {
-  console.log('catch:', err);
-})
+promise
+  .then(res => {
+    console.log('then:', res);
+  })
+  .catch(err => {
+    console.log('catch:', err);
+  });
 
 // then: success1
 
-
 // then 方法接受的参数是函数，而如果传递的并非是一个函数，它实际上会将其解释为 then(null)，这就会导致前一个 Promise 的结果会穿透下面。
-Promise.resolve(1)
-  .then(2)
-  .then(Promise.resolve(3))
-  .then(console.log)
+Promise.resolve(1).then(2).then(Promise.resolve(3)).then(console.log);
 
 // 1
 
@@ -46,8 +44,8 @@ var light = function (timer, cb) {
   });
 };
 var step = function () {
-  Promise.resolve().
-    then(function () {
+  Promise.resolve()
+    .then(function () {
       return light(3000, red);
     })
     .then(function () {
@@ -59,7 +57,5 @@ var step = function () {
     .then(function () {
       step();
     });
-}
+};
 // step();
-
-
