@@ -1,0 +1,64 @@
+function arrayToTree(arr) {
+  const resArr = arr.slice(0);
+  let subQues = [];
+  const map = new Map();
+  arr.forEach(item => {
+    const { id, subquestions } = item;
+    if (!map.has(id)) {
+      map.set(id, item);
+      subQues = subQues.concat(subquestions);
+    }
+  });
+  for (let [key, val] of Array.from(map.entries())) {
+    if (subQues.indexOf(key) !== -1) {
+      const parentIndex = resArr.findIndex(item => item.subquestions.indexOf(key) !== -1);
+      const childIndex = resArr.findIndex(item => item.id === key);
+      if (parentIndex !== -1 && childIndex !== -1) {
+        if (!resArr[parentIndex].children) {
+          resArr[parentIndex].children = [];
+        }
+        // 想要直接在引用上修改
+        resArr[parentIndex].children[resArr[parentIndex].children.length] = resArr[childIndex];
+      }
+    }
+  }
+  return resArr.filter(item => subQues.indexOf(item.id) === -1);
+}
+
+const input = [
+  {
+    id: 1,
+    description: 'Do you have a pet?',
+    subquestions: [2]
+  },
+  {
+    id: 2,
+    description: 'What types of pet do you have?',
+    subquestions: [3]
+  },
+  { id: 3, description: 'Please specify your pet if choose other?', subquestions: [] }
+];
+
+const output = [
+  {
+    id: 1,
+    description: 'Do you have a pet?',
+    subquestions: [2],
+    children: [
+      {
+        id: 2,
+        description: 'What types of pet do you have?',
+        subquestions: [3],
+        children: [
+          {
+            id: 3,
+            description: 'Please specify your pet if choose other?',
+            subquestions: []
+          }
+        ]
+      }
+    ]
+  }
+];
+
+console.log(JSON.stringify(arrayToTree(input)));
